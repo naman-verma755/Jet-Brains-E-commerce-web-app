@@ -1,0 +1,52 @@
+*{
+    padding: 0;
+    margin:0;
+}
+
+
+.form
+{
+    display: flex;
+
+    justify-content: left;
+    padding-left: 119px;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    font-family: 'Libre Baskerville', serif;
+    background-image: url("../static/images/index3.png")  ;
+    background-repeat: no-repeat;
+    /*background-size: cover;*/
+    border-left: 1px solid rgba(0,0,0,0.2);
+}
+
+
+.container-sign
+{
+
+    padding: 20px 20px;
+    width: 35%;
+    height:500px;
+
+    font-size: 19px;
+
+    color: rgb(125,12,138);
+
+
+
+}
+.container input
+{
+    border: 2px solid rgb(143,43,161);
+    border-radius: 5px;
+}
+.container h1
+{
+    font-family: 'Anton', sans-serif;
+}
+
+#sub-btn {
+    background-color: rgba(143,43,161,0.7);
+    width: 100px;
+    height: 30px;
+}

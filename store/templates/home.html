@@ -1,0 +1,18 @@
+
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+    {% for product in products %}
+<div class="box2-box">
+
+   <img src={{product.image.url}} width="400" height="290">
+<!--    <h1>{{product.image.url}}</h1>-->
+</div>
+
+    {% endfor %}
+
+
+{% endblock %}

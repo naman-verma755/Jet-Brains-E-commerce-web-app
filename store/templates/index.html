@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="description" content="This is description">
+<meta name="keywords" content="">
+<meta name="robots" content="INDEX,FOLLOW">
+<link rel="stylesheet" type="text/css" href="ec.css">
+<title>THIS IS NAMAN YO</title>
+    <style>
+        {% include "index.css" %}
+    </style>
+</head>
+
+<body>
+    <nav class="nav">
+
+
+    </nav>
+    <div class="container">
+        <div class="box1">
+            <a href="#">All Product</a>
+            <hr>
+            <a href="#">Electronics</a>
+            <hr>
+            <a href="#">Men's Clothing</a>
+            <hr>
+            <a href="#">Women's Clothin</a>
+            <hr>
+            <a href="#">Household</a>
+
+
+        </div>
+        <div class="box2">
+            {% for product in products %}
+            <div class="box2-box">
+
+                <img src={{product.image.url}} width="450px" height="290px">
+
+
+            </div>
+            {% endfor %}
+
+        </div>
+        <div class="box3">
+
+        </div>
+
+
+    </div>
+
+</body>
+<footer></footer>
+</html>

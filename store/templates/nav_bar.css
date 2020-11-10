@@ -1,0 +1,38 @@
+nav {
+    /*background-color: rgb(209,52,180);*/
+    background-image: linear-gradient(to right,white 20% ,rgb(237,66,220) 80%);
+    height: 80px;
+    width:100%;
+
+}
+label.logo{
+    font-size: 27px;
+    display: inline;
+    line-height: 80px;
+    padding:0 100px;
+    opacity: 4.9;
+
+}
+
+nav ul {
+    float:right;
+    margin-right: 20px;
+}
+nav ul li {
+    display: inline-block;
+    line-height: 80px;
+    margin: 0 5px;
+
+}
+nav ul li a {
+    color:black;
+    font-size:17px;
+    text-transform: uppercase;
+    padding: 7px 13px;
+    border-radius: 3px;
+}
+nav ul li a img {
+
+    margin: 0px 27px;
+    margin-top: 8px;
+}
