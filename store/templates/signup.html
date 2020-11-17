@@ -8,17 +8,21 @@
   <div class="container-sign">
   <h1>Sign up</h1><br>
 
+    {% if error %}
+<div class="error">{{error}}</div><br>
+{% endif %}
+
 
   <form action="/signup/" method="POST" autocomplete="on">
     {% csrf_token %}
   <label for="fname">First name</label><br>
-  <input type="text" id="fname" name="fname"><br><br>
+  <input type="text" id="fname" value="{{values.first_name}}" name="fname"><br><br>
   <label for="lname">Last name:</label><br>
-  <input type="text" id="lname" name="lname"><br><br>
+  <input type="text" id="lname" value="{{values.last_name}}" name="lname"><br><br>
   <label for="email">Email:</label><br>
-  <input type="email" id="email" name="email" autocomplete="off"><br><br>
+  <input type="email" id="email" value="{{values.email}}" name="email" autocomplete="off"><br><br>
   <label for="pwd">Password</label><br>
-  <input type="password" name="pwd"><br><br>
+  <input type="password" value="{{values.password}}" name="pwd"><br><br>
   <input type="submit" id="sub-btn" value="Submit">
 
   </form>

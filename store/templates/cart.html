@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block cart %}
+{% load cart %}
+<div class="Cart-page">
+
+    <table>
+        <tr>
+            <th>Sno.</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+        <hr>
+        {% for product in products %}
+        <tr>
+
+        <td>{{forloop.counter}}</td>
+        <td><img style="height: 80px; width: 80px" src="{{product.image.url}}"> </td>
+        <td>{{product.name}}</td>
+
+        <td>{{product.price|currency}}</td>
+         <td>{{product|cart_quantity:request.session.cart}}</td>
+        <td>{{product|price_total:request.session.cart|currency}}</td>
+    </tr>
+        {% endfor %}
+        <tr>
+
+            <th colspan="1">Total</th>
+            <th colspan="6">{{products|total_cart_price:request.session.cart|currency}}</th>
+        </tr>
+
+    </table>
+
+
+<div class="sub-btn1"><a href="/checkout">Check Out</a></div>
+
+
+
+
+</div>
+
+
+{% endblock %}

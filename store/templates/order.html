@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load cart %}
+{% block order %}
+
+<table class="l">
+    <thead>
+    <tr>
+        <th>Sno.</th>
+        <th>Image</th>
+        <th>Product</th>
+        <th>Date</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for order in orders %}
+        <tr>
+
+        <td>{{forloop.counter}}</td>
+        <td><img style="height: 80px; width: 80px" src="{{order.product.image.url}}"> </td>
+        <td>{{order.product.name}}</td>
+        <td>{{order.date}}</td>
+
+        <td>{{order.product.price|currency}}</td>
+            <td>{{order.quantity}}</td>
+         <td>{{order.quantity|multiply:order.price|currency}}</td>
+            {% if order.status %}
+            <td>Completed</td>
+            {% else %}
+            <td>Pending</td>
+            {% endif %}
+
+    </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

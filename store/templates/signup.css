@@ -45,8 +45,16 @@
     font-family: 'Anton', sans-serif;
 }
 
-#sub-btn {
+.sub-btn {
     background-color: rgba(143,43,161,0.7);
     width: 100px;
     height: 30px;
+
+}
+
+.error {
+    background-color: rgba(255,0,0,0.2);
+    padding: 2px 12px;
+    border-radius:3px;
+    color:red;
 }
