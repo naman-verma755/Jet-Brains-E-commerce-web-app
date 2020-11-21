@@ -1,41 +1,120 @@
-
 {% extends 'base.html' %}
 {% block product_var %}
 {% load cart %}
-{% for product in products %}
-<div class="box2-box" id="{{product.id}}">
+<style>
+    {% include 'product.css' %}
 
-   <img src={{product.image.url}} width="400" height="290">
+</style>
 
-    <div class="product-id">{{product | is_in_cart:request.session.cart}}</div>
-  <div class="cart">
+<div class="box1">
+    <div class="all_product" >
+<a href="/product/?category=-1">All products</a>
+    </div>
+    <div class="category">
 
-     {% if product|is_in_cart:request.session.cart %}
-      <form action="/#{{product.id}}" class="" method="POST">
-          {% csrf_token %}
-          <input hidden type="text" name="product" value="{{product.id}}">
-          <input hidden type="text" name="product_remove" value="True">
-          <input type="submit" value="-" class="sub-btn1">
-      </form>
-    <div class="add-to-cart">{{product|cart_quantity:request.session.cart}} in cart </div>
-<!--       <input type="submit" name="plus" class="sub-btn2" value="+">-->
-      <form action="/" class="" method="POST">
-          {% csrf_token %}
-          <input hidden type="text" name="product" value="{{product.id}}">
-          <input type="submit" value="+" class="sub-btn2">
-      </form>
-      {% else %}
-       <form action="/#{{product.id}}" method="POST">
-        {% csrf_token %}
-        <input type="text" name="product" value="{{product.id}}" class="product-id">
-        <input type="submit" class="add-to-cart" value="Add to cart">
-    </form>
-      {% endif %}
+    <hr>
 
-  </div>
+    <h2>Categories:</h2>
+
+    {% for category in categories %}
+    <a href="/product/?category={{category.id}}">{{category.name}}</a>
+    <hr>
+    {% endfor %}
+
+    </div>
+    {% if category_id != "-1"  %}
+    <div class="types">
+        <form action="/product/?category={{category_id}}" method="POST" >
+             {% csrf_token %}
+            <div class="type_label"> <label >Types:</label><br></div>
+
+
+            {% for i in types %}
+            <div class="brand_input">
+                <div class="brand_name_input"><input type="checkbox" value="{{i}}" name="List_type"></input><span class="type_name" class="type_name">{{i}}</span></div>
+            </div>
+            {% endfor %}
+
+
+        <br>
+        <input type="submit" value="Submit" >
+        </form>
+
+    </div>
+<!--    {% if lent %}-->
+    <div class="brand">
+         <form action="/product/?category={{category_id}}" method="POST" >
+             {% csrf_token %}
+             <div class="brand_label"><label >Brands:</label></div>
+
+
+            {% for brand in brands %}
+             <div class="brand_name_input" ><input type="checkbox" value="{{brand}}" name="brand_type"></input><span class="brand_name">{{brand}}</span></div>
+            {% endfor %}
+
+
+        <br>
+        <input type="submit" value="Submit" >
+        </form>
+
+
+    </div>
+<!--    {% endif %}-->
+
+    {% endif %}
+
+
+</div>
+
+<div class="box2">
+
+
+    {% for product in products %}
+    <div class="box2-box" id="{{product.id}}">
+
+        <img src={{product.image.url}} width="240px" height="200px">
+        <p>{{product.price|currency}}</p>
+
+<!--        <div class="product-id">{{product | is_in_cart:request.session.cart}}</div>-->
+
+          <div class="cart1">
+            {% if product|is_in_cart:request.session.cart %}
+              <div class="cart2">
+            <form action="/product/?category={{category_id}}&#{{product.id}}" method="POST">
+                {% csrf_token %}
+                <input hidden type="text" name="product" value="{{product.id}}">
+                <input hidden type="text" name="product_remove" value="True">
+<!--                <input hidden type="text" name="category_id" value="category_id">-->
+                <input type="submit" value="-" class="sub-btn1">
+
+            </form>
+            <div class="add-to-cart">{{product|cart_quantity:request.session.cart}} in cart</div>
+            <!--       <input type="submit" name="plus" class="sub-btn2" value="+">-->
+            <form action="/product/?category={{category_id}}&#{{product.id}}" class="cart2" method="POST">
+                {% csrf_token %}
+                <input hidden type="text" name="product" value="{{product.id}}">
+                <input type="submit" value="+" class="sub-btn1">
+            </form></div>
+            {% else %}
+              <div class="cart2">
+            <form action="/product/?category={{category_id}}&#{{product.id}}" class="cart2" method="POST">
+                {% csrf_token %}
+                <input type="text" name="product" value="{{product.id}}" class="product-id">
+                <input type="submit" class="add-to-cart" value="Add to cart">
+            </form></div>
+            {% endif %}
+
+
+    </div>
+
+    </div>
+    {% endfor %}
+
 </div>
 
 
-    {% endfor %}
+
+
+
 
 {% endblock %}

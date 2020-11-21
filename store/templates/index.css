@@ -1,16 +1,4 @@
-*
-{
-    margin: 0;
-    padding:0;
-    box-sizing:border-box;
 
-}
-nav {
-    background-color: green;
-    height: 10vh;
-    width: 100%;
-
-}
 .container {
     height: 100vh;
     display: grid;
@@ -85,7 +73,7 @@ flex-direction:column;
     border-radius: 2px;
     text-align: center;
     padding-top: 7px;
-    margin-left: 2px 2px;
+    margin-left: 2px ;
 }
 .sub-btn2 {
     width: 72px;

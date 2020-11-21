@@ -8,22 +8,49 @@ from store.middlewares.auth import auth_middleware
 from django.utils.decorators import method_decorator
 
 def home(request):
-    return render(request,'home.html')
+    products = Product.get_all_products()
+    categories = Category.get_all_categories()
+    # for category in categories:
+    #     print(category.image)
+    data = {}
+    data['products'] = products
+    data['categories'] = categories
+
+    return render(request,'home.html',data)
 
 
-
+def get_my_price(obj):
+    return obj
 # Create your views here.
 def index(request):
     products = None
 
     products = Product.get_all_products()
+
+
+    temp =[]
+    for product in products:
+        temp.append(product)
+
+    temp = sorted(temp,key = lambda x:x.price)
+    # for i in temp:
+    #     print(i.price)
+
     categories = Category.get_all_categories()
     data = {}
-    data['products'] = products
+
+    data['products'] = temp
     data['categories'] = categories
     if request.method == 'POST':
         remove_product = request.POST.get('product_remove')
         product = request.POST.get('product')
+        # temp = []
+        # for produc in product:
+        #     temp.append(produc)
+        # print(temp)
+        # temp = sorted(temp, key=lambda x: x.price)
+        # for i in temp:
+        #     print(i.price)
         cart = request.session.get('cart')
         if (cart):
             quantity = cart.get(product)
@@ -114,10 +141,10 @@ class Log_in(View):
 
                 if Log_in.return_url:
 
-                    return_url = None
+
                     return HttpResponseRedirect(Log_in.return_url)
                 else:
-                    return redirect('home')
+                    return redirect('homepage')
 
             else:
                 error_message = 'Invalid password'
@@ -137,33 +164,197 @@ def cart(request):
         if not cart:
             request.session['cart'] = {}
         ids = list(request.session.get('cart').keys())
+
         products = Product.get_products_by_id(ids)
         #print(products)
         return render(request, 'cart.html', {'products': products})
 
+class Product_class(View):
+    brand = None
+    type = None
+    price = None
+    category_id = None
 
-def product(request):
-    if request.method == 'POST':
+
+    list_an = list()
+    brand_an = list()
+    def post(self,request):
+
+
+        # Product_class.type = None
+        # Product_class.brand = None
+        # Product_class.price = None
+
+        R = request.POST.getlist('List_type')
+        if(len(R) != 0):
+            Product_class.list_an = R
+        brand_an = request.POST.getlist('brand_type')
+        print("there",brand_an)
+        remove_product = request.POST.get('product_remove')
         product = request.POST.get('product')
-        #print('product', product)
-        return redirect("home")
-    else:
+        Product_class.category_id = request.GET.get('category')
+
+        print("here")
+        print(Product_class.list_an)
+
+
         cart = request.session.get('cart')
-        if not cart:
-            request.session['cart'] = {}
+
+
+
+        #cart = request.session.get('cart')
+
+
+        if (cart):
+            quantity = cart.get(product)
+            if quantity:
+                if remove_product:
+                    if (quantity <= 1):
+                        cart.pop(product)
+                    else:
+                        cart[product] = quantity - 1
+                else:
+                    cart[product] = (quantity + 1)
+            else:
+                cart[product] = 1
+        else:
+            cart = {}
+            cart[product] = 1
+        temp = {}
+        for i,j in cart.items():
+            if i != 'null' and i is not None:
+                temp[i] = j
+        cart =temp
+
+        request.session['cart'] = cart
         products = None
 
-        #print("yes")
+
+
+
+
+        # print("yes")
         categories = Category.get_all_categories()
-        category_id = request.GET.get('category')
-        if (category_id):
-            products = Product.products_by_id(category_id)
-        else:
-            products = Product.get_all_products()
+
+
+        # if (Product_class.category_id == -1):
+        #     products = Product.get_all_products()
+        # else:
+        #     products = Product.products_by_id(Product_class.category_id)
+
+
+        type_list = list()
+        k = list()
+        brand = list()
+        lent = 0
+        products = None
+        if ( Product_class.category_id != "-1"):
+
+
+            products = Product.products_by_id(Product_class.category_id)
+            if Product_class.list_an is not None:
+                for i in products:
+                    if i.type in Product_class.list_an:
+                        k.append(i)
+                lent = len(Product_class.list_an)
+            else:
+                for i in products:
+                    k.append(i)
+        # if Product_class.list_an is not None and len(Product_class.list_an) != 0 :
+        #     for i in products:
+        #         if i.type in Product_class.list_an:
+        #             k.append(i)
+        #
+        #     lent = len(Product_class.list_an)
+        #
+        # else:
+        #     for i in products:
+        #         k.append(i)
+        if products is not None:
+            for i in products:
+                type_list.append(i.type)
+                brand.append(i.brand)
+            brand = list(set(brand))
+            type_list = list(set(type_list))
+            if len(brand_an) != 0:
+                temp = []
+                for i in k:
+                    if i.brand in brand_an:
+                        temp.append(i)
+                k = temp
+
+
+        if len(k) ==0:
+            k = Product.get_all_products()
+
 
         data = {}
-        data['products'] = products
+        data['types'] = type_list
+        data['brands'] = brand
+        data['products'] = k
+        data['lent'] = lent
         data['categories'] = categories
+        data['category_id'] = Product_class.category_id
+        return render(request, 'product.html', data)
+
+    def get(self,request):
+
+
+        cart = request.session.get('cart')
+        if cart is None:
+            request.session['cart'] = {}
+
+        Product_class.category_id = request.GET.get('category')
+        print(Product_class.category_id)
+        #print("yes")
+        categories = Category.get_all_categories()
+        # if (Product_class.category_id == -1):
+        #     products = Product.get_all_products()
+        # else:
+        #     products = Product.products_by_id(Product_class.category_id)
+        print("yeah",Product_class.category_id)
+        type_list = list()
+        k = list()
+        brand = list()
+
+        if ( Product_class.category_id != "-1"):
+            print("yes executed")
+            Product_class.list_an = None
+            products = Product.products_by_id(Product_class.category_id)
+            if Product_class.list_an is not None:
+                for i in products:
+                    if i.type in Product_class.list_an:
+                        k.append(i)
+            else:
+                for i in products:
+                    k.append(i)
+
+            for i in products:
+                type_list.append(i.type)
+                brand.append(i.brand)
+        else:
+            products = Product.get_all_products()
+            k = products
+
+
+
+
+
+
+
+
+
+
+
+        type_list = list(set(type_list))
+        brand = list(set(brand))
+        data = {}
+        data['types'] = type_list
+        data['brands'] = brand
+        data['products'] = k
+
+        data['categories'] = categories
+        data['category_id'] = Product_class.category_id
         return render(request, 'product.html', data)
 
 

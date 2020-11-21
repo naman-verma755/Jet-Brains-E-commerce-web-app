@@ -3,6 +3,9 @@ import  datetime
 
 class Category(models.Model):
     name = models.CharField(max_length=20)
+    #new fields
+    image = models.ImageField(upload_to='uploads/product_images/',blank=True)
+
 
     @staticmethod
     def get_all_categories():
@@ -17,6 +20,9 @@ class Product(models.Model):
     name = models.CharField(max_length=100)
     price = models.IntegerField(default=0)
     category = models.ForeignKey(Category, on_delete=models.CASCADE,default=1)
+    brand = models.CharField(max_length=100,default='')
+    type = models.CharField(max_length=100,default='')
+    keyword = models.CharField(max_length=1000,default='')
     description = models.CharField(max_length=2000,default="")
     image = models.ImageField(upload_to='uploads/product_images/')
 
@@ -33,10 +39,21 @@ class Product(models.Model):
     @staticmethod
 
     def products_by_id(category_id):
+        Dict = dict()
         if(category_id):
-            return Product.objects.filter(category = category_id)
+            Dict['category']=category_id
+
+        print('Here')
+        for i in Dict:
+            print(i,Dict[i])
+        if(category_id):
+            return Product.objects.filter(**Dict)
         else:
             return Product.objects.all()
+        # category = category_id, brand = 'None'
+    # @staticmethod
+    # def filter_by_price():
+    #     print(Product.objects.filter(category = price))
 
 
 class Customer(models.Model):

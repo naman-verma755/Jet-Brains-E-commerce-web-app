@@ -4,11 +4,14 @@ register = template.Library()
 
 @register.filter(name='is_in_cart')
 def is_in_cart(product,cart):
+    print("tu")
+    print(cart)
     keys = cart.keys()
 
     #print(cart)
+
     for id in keys:
-        if int(id) == product.id:
+        if (id != 'null' and id is not None and int(id) == product.id):
             return True
     return False
 
@@ -22,7 +25,7 @@ def cart_quantity(product,cart):
 
 
     for id in keys:
-        if int(id) == product.id:
+        if(id != 'null' and id is not None and int(id) == product.id):
             return cart.get(id)
     return 0
 
@@ -36,7 +39,7 @@ def price_total(product,cart):
 def total_cart_price(products,cart):
     sum = 0
     for p in products:
-        sum += price_total(p,cart)
+            sum += price_total(p,cart)
     return sum
 
 @register.filter(name='currency')

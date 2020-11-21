@@ -1,0 +1,38 @@
+
+body {
+    background-color: rgba(237,66,220,0.1);
+}
+table, th, td {
+    border: 2px solid rgb(143,43,161);
+    padding: 20px;
+
+}
+th {
+    color:rgb(125,12,138)
+}
+ td {
+    color:rgb(14,34,66);
+}
+table {
+    margin: 100px;
+    margin-bottom: 100px;
+    border-collapse: collapse;
+
+}
+
+.cart-btn {
+    margin: 100px;
+    text-decoration: none;
+
+
+}
+
+.cart-btn a{
+
+    border:2px solid rgb(143,43,161);
+    border-radius: 5px;
+    text-decoration: none;
+    background-color: rgba(143,43,161,0.7);
+    padding: 9px;
+
+}

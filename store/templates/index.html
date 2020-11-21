@@ -1,56 +1,107 @@
+
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="description" content="This is description">
-<meta name="keywords" content="">
-<meta name="robots" content="INDEX,FOLLOW">
-<link rel="stylesheet" type="text/css" href="ec.css">
-<title>THIS IS NAMAN YO</title>
-    <style>
-        {% include "index.css" %}
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="This is description">
+    <meta name="keywords" content="">
+    <meta name="robots" content="INDEX,FOLLOW">
+
+    <title>THIS IS NAMAN YO</title>
+<!--    <script src="https://kit.fontawesome.com/a076d05399.js"></script>-->
+
 </head>
 
 <body>
-    <nav class="nav">
+<style>
+    *
+{
+    margin: 0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+    {% include 'nav_bar.css' %}
+
+    </style>
+<nav class="navbar">
+    <div class="brand-title">Jet Brains</div>
+
+    <a href="#" class="toggle-button">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+
+    </a>
 
 
-    </nav>
-    <div class="container">
-        <div class="box1">
-            <a href="#">All Product</a>
-            <hr>
-            <a href="#">Electronics</a>
-            <hr>
-            <a href="#">Men's Clothing</a>
-            <hr>
-            <a href="#">Women's Clothin</a>
-            <hr>
-            <a href="#">Household</a>
+    <div class="navbar-links">
+
+    <ul>
+
+        <li><a class="#" href="/">Home</a></li>
+        <li><a class="#" href="/cart">cart<span>{{request.session.cart.keys|length}}</span></a></li>
+        {% if request.session.customer %}
+<!--        <li><a class="fas" href="/cart">cart<span>{{request.session.cart.keys|length}}</span></a></li>-->
+        <li><a href="/order_view">Orders</a></li>
+        <li><a href="/logout">Log out</a></li>
+        {% else %}
+        <li class="lit"><a href="/login">Log in</a></li>
+        <li><a href="/signup">Sign up</a></li>
+        {% endif %}
+        <!--            <li><a href="#"><img src="../static/images/cart4.jpg" height="37" width="50"></a></li>-->
+
+  </a></li>
 
 
-        </div>
-        <div class="box2">
-            {% for product in products %}
-            <div class="box2-box">
-
-                <img src={{product.image.url}} width="450px" height="290px">
-
-
-            </div>
-            {% endfor %}
-
-        </div>
-        <div class="box3">
-
-        </div>
-
-
+    </ul>
     </div>
+
+
+
+</nav>
+<script>
+const toggleButton = document.getElementsByClassName('toggle-button')[0]
+const navbarLinks = document.getElementsByClassName('navbar-links')[0]
+
+toggleButton.addEventListener('click',()=> {
+    navbarLinks.classList.toggle('active')
+})
+</script>
+
+
+
+
+<div class="container1">
+
+    {% block product_var %}
+    {% endblock %}
+
+</div>
+
+<div class="container">
+    {% block checkout %}
+    {% endblock %}
+    {% block order %}
+    {% endblock %}
+    {% block cart %}
+    {% endblock %}
+    {% block login %}
+    {% endblock %}
+    {% block signup %}
+    {% endblock %}
+    {% block home %}
+{% endblock %}
+</div>
 
 </body>
 <footer></footer>
 </html>
+
+
+
+

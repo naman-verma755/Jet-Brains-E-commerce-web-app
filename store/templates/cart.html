@@ -7,6 +7,7 @@
         <tr>
             <th>Sno.</th>
             <th>Product</th>
+            <th>Image</th>
             <th>Price</th>
             <th>Quantity</th>
             <th>Total</th>
@@ -33,12 +34,15 @@
     </table>
 
 
-<div class="sub-btn1"><a href="/checkout">Check Out</a></div>
+<div class="cart-btn"><a href="/checkout">Check Out</a></div>
 
 
 
 
 </div>
+<style>
+    {% include 'cart.css' %}
+</style>
 
 
 {% endblock %}
