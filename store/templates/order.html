@@ -29,7 +29,7 @@
             <td>{{order.quantity}}</td>
          <td>{{order.quantity|multiply:order.price|currency}}</td>
             {% if order.status %}
-            <td style="color:green">Completed</td>
+            <td style="color:green">Delivered</td>
             {% else %}
             <td style="color:red">Pending</td>
             {% endif %}

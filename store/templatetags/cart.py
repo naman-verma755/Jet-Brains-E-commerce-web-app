@@ -4,12 +4,7 @@ register = template.Library()
 
 @register.filter(name='is_in_cart')
 def is_in_cart(product,cart):
-    print("tu")
-    print(cart)
     keys = cart.keys()
-
-    #print(cart)
-
     for id in keys:
         if (id != 'null' and id is not None and int(id) == product.id):
             return True

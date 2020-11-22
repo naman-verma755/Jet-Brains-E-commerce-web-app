@@ -41,7 +41,7 @@
         </form>
 
     </div>
-<!--    {% if lent %}-->
+
     <div class="brand">
          <form action="/product/?category={{category_id}}" method="POST" >
              {% csrf_token %}
@@ -58,8 +58,19 @@
         </form>
 
 
+
     </div>
-<!--    {% endif %}-->
+    <div class="price">
+        <form action="/product/?category={{category_id}}" method="POST">
+            {% csrf_token %}
+            <div class="brand_label"><label >Price:</label></div>
+            <div class="brand_name_input"><input type="radio" name="price_low_high"><span class="brand_name">Low to high</span> </div>
+            <div class="brand_name_input"><input type="radio" name="price_high_low"><span class="brand_name">High to low</span> </div>
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
 
     {% endif %}
 
@@ -73,11 +84,13 @@
     <div class="box2-box" id="{{product.id}}">
 
         <img src={{product.image.url}} width="240px" height="200px">
-        <p>{{product.price|currency}}</p>
+        <p class="product-name">{{product.name}}</p>
+        <p class="product-price" >{{product.price|currency}}</p>
 
 <!--        <div class="product-id">{{product | is_in_cart:request.session.cart}}</div>-->
 
           <div class="cart1">
+
             {% if product|is_in_cart:request.session.cart %}
               <div class="cart2">
             <form action="/product/?category={{category_id}}&#{{product.id}}" method="POST">

@@ -1,7 +1,7 @@
 
 from django.contrib import admin
 from django.urls import path
-from .views import index,sign_up,Product_class,Log_in,log_out,cart, checkout,order_view,home
+from .views import sign_up,Product_class,Log_in,log_out,cart, checkout,order_view,home
 from .middlewares.auth import auth_middleware
 
 urlpatterns = [
